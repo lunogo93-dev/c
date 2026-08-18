@@ -1,1 +1,3930 @@
-.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#07070d">
+<title>Q - Multifunctional</title>
+
+<style>
+:root{
+  --bg:#07070d;
+  --bg2:#0c0a18;
+  --card:rgba(18,17,31,.72);
+  --line:rgba(255,255,255,.1);
+  --text:#f6f4ff;
+  --muted:#9794ad;
+  --accent:#6d5cff;
+  --cyan:#15d9ff;
+  --good:#35e39a;
+  --bad:#ff5e7b;
+  --blur:22px;
+  --shadow:0 24px 80px rgba(0,0,0,.45);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--bg);
+}
+
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 10%,rgba(109,92,255,.18),transparent 28%),
+    radial-gradient(circle at 85% 25%,rgba(21,217,255,.1),transparent 24%),
+    linear-gradient(145deg,#05050a,#0b0915 48%,#06070d);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  color:inherit;
+  border:0;
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+#ambientCanvas,
+#splashCanvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+
+#ambientCanvas{
+  z-index:0;
+}
+
+.noise{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ================= SPLASH ================= */
+
+#splash{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:#030309;
+  transition:.8s ease;
+}
+
+#splash.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+#splashCanvas{
+  z-index:1;
+}
+
+.splash-content{
+  position:relative;
+  z-index:3;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+  text-align:center;
+}
+
+.splash-q{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-size:76px;
+  font-weight:950;
+  letter-spacing:-8px;
+  background:linear-gradient(135deg,#735cff,#25d9ff);
+  box-shadow:
+    0 0 45px rgba(109,92,255,.7),
+    0 0 100px rgba(21,217,255,.2);
+  opacity:0;
+  transform:scale(.45);
+  transition:
+    opacity .6s ease,
+    transform .9s cubic-bezier(.16,1,.3,1);
+}
+
+.splash-q.ready{
+  opacity:1;
+  transform:scale(1);
+}
+
+.splash-title{
+  font-size:12px;
+  letter-spacing:7px;
+  color:#bbb7cf;
+  text-transform:uppercase;
+  opacity:0;
+  transition:.7s ease;
+}
+
+.splash-title.ready{
+  opacity:1;
+}
+
+.enter-btn{
+  padding:12px 28px;
+  border-radius:999px;
+  color:white;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(15px);
+  -webkit-backdrop-filter:blur(15px);
+  opacity:0;
+  transform:translateY(12px);
+  transition:.35s ease;
+  pointer-events:auto;
+}
+
+.enter-btn.ready{
+  opacity:1;
+  transform:none;
+}
+
+.enter-btn:hover{
+  background:rgba(255,255,255,.14);
+  transform:translateY(-2px);
+}
+
+/* ================= APP ================= */
+
+.app{
+  position:relative;
+  z-index:2;
+  min-height:100vh;
+}
+
+.container{
+  width:min(1120px,calc(100% - 30px));
+  margin:auto;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  height:74px;
+  display:flex;
+  align-items:center;
+  background:linear-gradient(
+    180deg,
+    rgba(5,5,10,.88),
+    rgba(5,5,10,.2)
+  );
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid transparent;
+  transition:.35s ease;
+}
+
+.topbar.scrolled{
+  height:64px;
+  background:rgba(7,7,13,.78);
+  border-bottom-color:var(--line);
+}
+
+.nav-inner{
+  width:min(1120px,calc(100% - 30px));
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand-mini{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-weight:800;
+  opacity:0;
+  transform:translateX(-15px);
+  pointer-events:none;
+  transition:.45s cubic-bezier(.16,1,.3,1);
+}
+
+.topbar.scrolled .brand-mini{
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
+}
+
+.brand-mark{
+  width:35px;
+  height:35px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  font-size:20px;
+  font-weight:950;
+  background:linear-gradient(135deg,#705cff,#20d7ff);
+  box-shadow:0 0 25px rgba(109,92,255,.3);
+}
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-left:auto;
+}
+
+.icon-btn,
+.lang-select{
+  height:40px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.055);
+  backdrop-filter:blur(12px);
+}
+
+.icon-btn{
+  width:40px;
+  display:grid;
+  place-items:center;
+}
+
+.icon-btn:hover,
+.lang-select:hover{
+  background:rgba(255,255,255,.1);
+}
+
+.lang-select{
+  color:var(--text);
+  padding:0 10px;
+  outline:none;
+}
+
+.lang-select option{
+  background:#11101a;
+  color:white;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  min-height:700px;
+  padding-top:105px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.hero-logo-wrap{
+  width:220px;
+  height:220px;
+  position:relative;
+  margin-bottom:25px;
+  will-change:transform;
+}
+
+.hero-logo{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(255,255,255,.35),
+      transparent 23%
+    ),
+    linear-gradient(
+      135deg,
+      #6558ff,
+      #3d8cff 52%,
+      #1ed7ee
+    );
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.35),
+    0 0 50px rgba(92,86,255,.38),
+    0 0 100px rgba(20,215,240,.13);
+}
+
+.hero-logo:before{
+  content:"";
+  position:absolute;
+  inset:-10px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  border-left-color:#26cfff;
+  border-bottom-color:#705dff;
+  animation:spin 8s linear infinite;
+}
+
+.hero-logo:after{
+  content:"";
+  position:absolute;
+  inset:15px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.q-letter{
+  font-size:130px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-16px;
+  transform:translateX(-6px);
+  color:#e9fbff;
+  text-shadow:0 0 25px rgba(255,255,255,.25);
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.hero h1{
+  margin-bottom:15px;
+  font-size:clamp(42px,7vw,76px);
+  line-height:.95;
+  letter-spacing:-4px;
+  font-weight:900;
+  background:linear-gradient(
+    90deg,
+    #fff,
+    #a99eff 48%,
+    #68eaff
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:620px;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.7;
+}
+
+.hero-actions{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:27px;
+}
+
+.primary-btn,
+.ghost-btn{
+  min-height:46px;
+  padding:0 19px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  border-radius:15px;
+  border:1px solid var(--line);
+  transition:.3s ease;
+}
+
+.primary-btn{
+  background:linear-gradient(135deg,#6654ff,#426dff);
+  box-shadow:0 12px 32px rgba(76,79,255,.24);
+}
+
+.ghost-btn{
+  background:rgba(255,255,255,.045);
+}
+
+.primary-btn:hover,
+.ghost-btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.08);
+}
+
+.tip-row{
+  margin-top:18px;
+  color:#9ea2bd;
+  font-size:12px;
+}
+
+/* ================= SECTIONS ================= */
+
+.section{
+  padding:27px 0 13px;
+}
+
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:16px;
+}
+
+.section-title{
+  font-size:23px;
+  letter-spacing:-.8px;
+}
+
+.section-sub{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.section-link{
+  color:#aaa6c7;
+  font-size:12px;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+  height:62px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 18px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:rgba(15,14,26,.75);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(var(--blur));
+  -webkit-backdrop-filter:blur(var(--blur));
+  transition:.3s ease;
+}
+
+.search-box:focus-within{
+  border-color:rgba(111,95,255,.65);
+  box-shadow:
+    0 0 0 4px rgba(109,92,255,.08),
+    var(--shadow);
+}
+
+.search-icon{
+  font-size:23px;
+}
+
+#searchInput{
+  flex:1;
+  min-width:0;
+  border:0;
+  outline:0;
+  background:none;
+  color:var(--text);
+  font-size:16px;
+}
+
+#searchInput::placeholder{
+  color:#77748c;
+}
+
+.search-kbd{
+  color:#77748c;
+  font-size:10px;
+  padding:4px 7px;
+  border:1px solid var(--line);
+  border-radius:7px;
+}
+
+.search-results{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:10px;
+}
+
+.result-card{
+  padding:15px;
+  text-align:left;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:rgba(18,17,31,.7);
+  transition:.25s ease;
+}
+
+.result-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(109,92,255,.5);
+}
+
+.result-title{
+  font-weight:700;
+  margin-bottom:4px;
+}
+
+.result-desc{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.55;
+}
+
+.result-tag{
+  margin-top:9px;
+  color:#aaa4ff;
+  font-size:10px;
+}
+
+/* ================= ADS ================= */
+
+.ad-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.ad-card{
+  min-height:118px;
+  position:relative;
+  overflow:hidden;
+  padding:18px;
+  text-align:left;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.1);
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(21,217,255,.15),
+      transparent 32%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(48,42,104,.72),
+      rgba(20,18,37,.88)
+    );
+  transition:.3s ease;
+}
+
+.ad-card:before{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  right:-38px;
+  bottom:-55px;
+  border-radius:50%;
+  background:rgba(108,92,255,.22);
+  filter:blur(5px);
+}
+
+.ad-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(0,0,0,.28);
+}
+
+.ad-label{
+  color:#8f8aa9;
+  font-size:9px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.ad-title{
+  margin-top:8px;
+  font-size:20px;
+  font-weight:800;
+}
+
+.ad-text{
+  max-width:90%;
+  margin-top:6px;
+  color:#b6b2c7;
+  font-size:12px;
+}
+
+.ad-arrow{
+  position:absolute;
+  top:16px;
+  right:16px;
+  opacity:.75;
+}
+
+/* ================= MARKET ================= */
+
+.market-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:11px;
+}
+
+.market-card{
+  padding:16px;
+  border-radius:19px;
+  border:1px solid var(--line);
+  background:rgba(15,14,26,.72);
+  transition:.3s ease;
+}
+
+.market-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(21,217,255,.3);
+}
+
+.coin-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.coin-name{
+  font-weight:750;
+}
+
+.coin-symbol{
+  margin-top:3px;
+  color:#7f7b91;
+  font-size:10px;
+  text-transform:uppercase;
+}
+
+.coin-icon{
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:linear-gradient(135deg,#2a2941,#141321);
+  font-size:12px;
+  font-weight:800;
+}
+
+.coin-price{
+  margin-top:17px;
+  font-size:20px;
+  font-weight:800;
+}
+
+.coin-change{
+  margin-top:5px;
+  font-size:11px;
+}
+
+.up{color:var(--good)}
+.down{color:var(--bad)}
+.neutral{color:var(--muted)}
+
+.market-foot{
+  margin-top:14px;
+  color:#77738b;
+  font-size:10px;
+}
+
+/* ================= MENU ================= */
+
+.menu-panel{
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:rgba(13,12,23,.78);
+  backdrop-filter:blur(var(--blur));
+  -webkit-backdrop-filter:blur(var(--blur));
+}
+
+.main-menu-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.menu-btn{
+  min-height:70px;
+  padding:12px;
+  text-align:left;
+  border-radius:17px;
+  background:rgba(255,255,255,.045);
+  border:1px solid transparent;
+  transition:.28s ease;
+}
+
+.menu-btn:hover,
+.menu-btn.active{
+  transform:translateY(-2px);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(106,89,255,.2),
+      rgba(21,217,255,.06)
+    );
+  border-color:rgba(111,95,255,.34);
+}
+
+.menu-icon{
+  font-size:21px;
+}
+
+.menu-name{
+  display:block;
+  margin-top:7px;
+  font-size:13px;
+  font-weight:700;
+}
+
+.menu-meta{
+  display:block;
+  margin-top:3px;
+  color:#77748b;
+  font-size:10px;
+}
+
+.submenu{
+  display:none;
+  margin-top:10px;
+  padding:10px;
+  border-radius:18px;
+  background:rgba(0,0,0,.17);
+  border:1px solid var(--line);
+}
+
+.submenu.open{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  animation:fadeUp .25s ease;
+}
+
+.sub-btn{
+  padding:12px;
+  text-align:left;
+  border-radius:13px;
+  background:rgba(255,255,255,.04);
+  border:1px solid transparent;
+  transition:.25s ease;
+}
+
+.sub-btn:hover{
+  background:rgba(255,255,255,.08);
+  border-color:var(--line);
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(-5px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  padding:60px 0 32px;
+  color:#69667b;
+  font-size:11px;
+  text-align:center;
+}
+
+.footer-line{
+  height:1px;
+  margin-bottom:25px;
+  background:var(--line);
+}
+
+.socials{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:13px;
+}
+
+.social{
+  width:35px;
+  height:35px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--line);
+  transition:.25s ease;
+}
+
+.social:hover{
+  transform:translateY(-2px);
+  background:rgba(255,255,255,.1);
+}
+
+.social svg{
+  width:17px;
+  height:17px;
+  fill:currentColor;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  place-items:center;
+  padding:18px;
+  background:rgba(0,0,0,.64);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+
+.modal.open{
+  display:grid;
+}
+
+.modal-card{
+  width:min(680px,100%);
+  max-height:88vh;
+  overflow:auto;
+  padding:22px;
+  border-radius:27px;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(26,24,43,.98),
+      rgba(11,10,18,.98)
+    );
+  box-shadow:0 35px 100px rgba(0,0,0,.55);
+  animation:modalIn .3s cubic-bezier(.16,1,.3,1);
+}
+
+@keyframes modalIn{
+  from{
+    opacity:0;
+    transform:translateY(16px) scale(.97);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:17px;
+}
+
+.modal-title{
+  font-size:21px;
+  font-weight:850;
+}
+
+.close-btn{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--line);
+}
+
+.modal-body{
+  color:#aaa7ba;
+  font-size:14px;
+  line-height:1.7;
+}
+
+/* ================= TOAST ================= */
+
+#toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  z-index:800;
+  padding:11px 15px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  background:rgba(18,17,30,.92);
+  box-shadow:0 15px 45px rgba(0,0,0,.4);
+  font-size:12px;
+  opacity:0;
+  pointer-events:none;
+  transform:translate(-50%,20px);
+  transition:.3s ease;
+}
+
+#toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px){
+
+  .hero{
+    min-height:650px;
+  }
+
+  .hero-logo-wrap{
+    width:190px;
+    height:190px;
+  }
+
+  .q-letter{
+    font-size:110px;
+  }
+
+  .ad-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .market-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .main-menu-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:540px){
+
+  .container{
+    width:calc(100% - 22px);
+  }
+
+  .nav-inner{
+    width:calc(100% - 22px);
+  }
+
+  .hero{
+    min-height:610px;
+  }
+
+  .hero-logo-wrap{
+    width:165px;
+    height:165px;
+  }
+
+  .q-letter{
+    font-size:95px;
+  }
+
+  .hero h1{
+    font-size:43px;
+    letter-spacing:-2.5px;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  .search-results{
+    grid-template-columns:1fr;
+  }
+
+  .search-kbd{
+    display:none;
+  }
+
+  .ad-grid{
+    grid-template-columns:1fr;
+  }
+
+  .market-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .main-menu-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .submenu.open{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .lang-select{
+    max-width:112px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= SPLASH ================= -->
+
+<div id="splash">
+  <canvas id="splashCanvas"></canvas>
+
+  <div class="splash-content">
+    <div id="splashQ" class="splash-q">Q</div>
+    <div id="splashTitle" class="splash-title">
+      Q · Multifunctional
+    </div>
+    <button id="enterBtn" class="enter-btn">
+      Enter
+    </button>
+  </div>
+</div>
+
+<canvas id="ambientCanvas"></canvas>
+<div class="noise"></div>
+
+<!-- ================= APP ================= -->
+
+<div class="app">
+
+<header id="topbar" class="topbar">
+
+  <div class="nav-inner">
+
+    <a href="#home" class="brand-mini">
+
+      <span class="brand-mark">Q</span>
+
+      <span id="miniBrand">
+        Q - Multifunctional
+      </span>
+
+    </a>
+
+    <div class="nav-actions">
+
+      <button
+        id="themeBtn"
+        class="icon-btn"
+        title="Theme"
+      >
+        ☼
+      </button>
+
+      <select
+        id="languageSelect"
+        class="lang-select"
+        aria-label="Language"
+      ></select>
+
+      <button
+        id="menuOpenBtn"
+        class="icon-btn"
+        title="Menu"
+      >
+        ☰
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<main id="home">
+
+<!-- ================= HERO ================= -->
+
+<section class="hero container">
+
+  <div id="heroLogoWrap" class="hero-logo-wrap">
+
+    <div class="hero-logo">
+      <span class="q-letter">Q</span>
+    </div>
+
+  </div>
+
+  <h1 id="heroTitle">
+    Q - Multifunctional
+  </h1>
+
+  <p id="heroSubtitle">
+    Search, market data, channels, tools and more in one interactive space.
+  </p>
+
+  <div class="hero-actions">
+
+    <a
+      href="#search"
+      id="heroSearchBtn"
+      class="primary-btn"
+    >
+      ⌕ <span>Search</span>
+    </a>
+
+    <button
+      id="heroMenuBtn"
+      class="ghost-btn"
+    >
+      ☷ <span>Explore Menu</span>
+    </button>
+
+  </div>
+
+  <div id="tipText" class="tip-row">
+    Dynamic interface · Configurable by JSON
+  </div>
+
+</section>
+
+
+<!-- ================= SEARCH ================= -->
+
+<section id="search" class="section container">
+
+  <div class="section-head">
+
+    <div>
+
+      <h2 id="searchTitle" class="section-title">
+        Search
+      </h2>
+
+      <div id="searchSub" class="section-sub">
+        Search.json powered content
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="search-box">
+
+    <span class="search-icon">⌕</span>
+
+    <input
+      id="searchInput"
+      type="search"
+      autocomplete="off"
+      placeholder="Search..."
+    >
+
+    <span class="search-kbd">
+      ⌘ K
+    </span>
+
+  </div>
+
+  <div
+    id="searchResults"
+    class="search-results"
+  ></div>
+
+</section>
+
+
+<!-- ================= ADS ================= -->
+
+<section id="ads" class="section container">
+
+  <div class="section-head">
+
+    <div>
+
+      <h2 id="adsTitle" class="section-title">
+        AD
+      </h2>
+
+      <div id="adsSub" class="section-sub">
+        Sponsored and featured content
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="adGrid" class="ad-grid"></div>
+
+</section>
+
+
+<!-- ================= MARKET ================= -->
+
+<section id="market" class="section container">
+
+  <div class="section-head">
+
+    <div>
+
+      <h2 id="marketTitle" class="section-title">
+        Market
+      </h2>
+
+      <div id="marketSub" class="section-sub">
+        Market data
+      </div>
+
+    </div>
+
+    <span
+      id="marketStatus"
+      class="section-link"
+    >
+      Loading...
+    </span>
+
+  </div>
+
+  <div
+    id="marketGrid"
+    class="market-grid"
+  ></div>
+
+</section>
+
+
+<!-- ================= MENU ================= -->
+
+<section id="menus" class="section container">
+
+  <div class="section-head">
+
+    <div>
+
+      <h2 id="menuTitle" class="section-title">
+        Menu
+      </h2>
+
+      <div id="menuSub" class="section-sub">
+        Main and secondary navigation
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="menu-panel">
+
+    <div
+      id="mainMenuGrid"
+      class="main-menu-grid"
+    ></div>
+
+    <div
+      id="submenu"
+      class="submenu"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="container">
+
+  <div class="footer-line"></div>
+
+  <div id="copyright">
+    © 2026 Q Team. All rights reserved.
+  </div>
+
+  <div class="socials">
+
+    <a
+      id="telegramLink"
+      class="social"
+      href="https://t.me/"
+      target="_blank"
+      rel="noopener"
+      aria-label="Telegram"
+    >
+
+      <svg viewBox="0 0 24 24">
+        <path d="M21.7 3.3 18.6 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L6 13.7l-5-1.6c-1.1-.3-1.1-1.1.2-1.6L20.7 2c.9-.3 1.7.2 1 1.3Z"/>
+      </svg>
+
+    </a>
+
+    <a
+      id="xLink"
+      class="social"
+      href="https://x.com/"
+      target="_blank"
+      rel="noopener"
+      aria-label="X"
+    >
+
+      <svg viewBox="0 0 24 24">
+        <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-5-6.5L6.2 22H3.1l7.2-8.3L2.8 2h6.4l4.5 6L18.9 2Zm-1.1 17.8h1.7L8.3 4H6.5l11.3 15.8Z"/>
+      </svg>
+
+    </a>
+
+  </div>
+
+</footer>
+
+</main>
+
+</div>
+
+
+<!-- ================= MODAL ================= -->
+
+<div
+  id="modal"
+  class="modal"
+  aria-hidden="true"
+>
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+
+      <div
+        id="modalTitle"
+        class="modal-title"
+      >
+        Menu
+      </div>
+
+      <button
+        id="modalClose"
+        class="close-btn"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div
+      id="modalBody"
+      class="modal-body"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   Q - MULTIFUNCTIONAL
+   JSON CONFIGURATION
+========================================================= */
+
+const CONFIG = {
+
+  files:{
+    language:"language.json",
+    search:"Search.json",
+    ads:"adv.json",
+    menu:"index.json",
+    market:"market.json"
+  },
+
+  defaultLanguage:"en",
+
+  languages:[
+    ["en","English"],
+    ["zh","中文"],
+    ["es","Español"],
+    ["fr","Français"],
+    ["de","Deutsch"],
+    ["pt","Português"],
+    ["ru","Русский"],
+    ["ja","日本語"],
+    ["ko","한국어"],
+    ["ar","العربية"]
+  ],
+
+  social:{
+    telegram:"https://t.me/",
+    x:"https://x.com/"
+  }
+
+};
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+const state={
+
+  lang:
+    localStorage.getItem("q_lang")
+    || CONFIG.defaultLanguage,
+
+  theme:
+    localStorage.getItem("q_theme")
+    || "dark",
+
+  data:{
+    language:null,
+    search:[],
+    ads:[],
+    menu:[],
+    market:[]
+  },
+
+  activeMenu:null
+
+};
+
+
+/* =========================================================
+   SHORTCUT
+========================================================= */
+
+const $=selector=>
+  document.querySelector(selector);
+
+const $$=selector=>
+  [...document.querySelectorAll(selector)];
+
+
+/* =========================================================
+   FALLBACK LANGUAGE
+========================================================= */
+
+const LANG={
+
+en:{
+ brand:"Q - Multifunctional",
+ subtitle:"Search, market data, channels, tools and more in one interactive space.",
+ search:"Search",
+ searchSub:"Search.json powered content",
+ ads:"AD",
+ adsSub:"Sponsored and featured content",
+ market:"Market",
+ marketSub:"Market data from market.json",
+ menu:"Menu",
+ menuSub:"Main and secondary navigation",
+ searchBtn:"Search",
+ explore:"Explore Menu",
+ tip:"Dynamic interface · Configurable by JSON",
+ copyright:"© 2026 Q Team. All rights reserved.",
+ placeholder:"Search...",
+ enter:"Enter",
+ loading:"Loading...",
+ noResults:"No results found."
+},
+
+zh:{
+ brand:"Q - 多功能",
+ subtitle:"搜索、行情、频道、工具以及更多功能，集中在一个交互空间。",
+ search:"搜索",
+ searchSub:"由 Search.json 提供内容",
+ ads:"广告",
+ adsSub:"赞助与推荐内容",
+ market:"市场",
+ marketSub:"由 market.json 提供行情数据",
+ menu:"菜单",
+ menuSub:"主菜单与次级菜单",
+ searchBtn:"搜索",
+ explore:"探索菜单",
+ tip:"动态界面 · 由 JSON 配置",
+ copyright:"© 2026 Q Team. 保留所有权利。",
+ placeholder:"搜索...",
+ enter:"进入",
+ loading:"加载中...",
+ noResults:"没有找到结果。"
+},
+
+es:{
+ brand:"Q - Multifuncional",
+ subtitle:"Búsqueda, mercado, canales, herramientas y más en un solo espacio.",
+ search:"Buscar",
+ searchSub:"Contenido de Search.json",
+ ads:"PUBLICIDAD",
+ adsSub:"Contenido patrocinado",
+ market:"Mercado",
+ marketSub:"Datos de market.json",
+ menu:"Menú",
+ menuSub:"Navegación principal y secundaria",
+ searchBtn:"Buscar",
+ explore:"Explorar",
+ tip:"Interfaz dinámica · Configurable con JSON",
+ copyright:"© 2026 Q Team.",
+ placeholder:"Buscar...",
+ enter:"Entrar",
+ loading:"Cargando...",
+ noResults:"Sin resultados."
+},
+
+fr:{
+ brand:"Q - Multifonction",
+ subtitle:"Recherche, marchés, canaux, outils et plus dans un seul espace.",
+ search:"Recherche",
+ searchSub:"Contenu de Search.json",
+ ads:"PUBLICITÉ",
+ adsSub:"Contenu sponsorisé",
+ market:"Marché",
+ marketSub:"Données de market.json",
+ menu:"Menu",
+ menuSub:"Navigation principale et secondaire",
+ searchBtn:"Rechercher",
+ explore:"Explorer",
+ tip:"Interface dynamique · Configurable via JSON",
+ copyright:"© 2026 Q Team.",
+ placeholder:"Rechercher...",
+ enter:"Entrer",
+ loading:"Chargement...",
+ noResults:"Aucun résultat."
+},
+
+de:{
+ brand:"Q - Multifunktional",
+ subtitle:"Suche, Marktdaten, Kanäle, Tools und mehr in einem interaktiven Bereich.",
+ search:"Suche",
+ searchSub:"Inhalte aus Search.json",
+ ads:"WERBUNG",
+ adsSub:"Gesponserte Inhalte",
+ market:"Markt",
+ marketSub:"Daten aus market.json",
+ menu:"Menü",
+ menuSub:"Haupt- und Untermenüs",
+ searchBtn:"Suchen",
+ explore:"Menü öffnen",
+ tip:"Dynamische Oberfläche · Über JSON konfigurierbar",
+ copyright:"© 2026 Q Team.",
+ placeholder:"Suchen...",
+ enter:"Öffnen",
+ loading:"Laden...",
+ noResults:"Keine Ergebnisse."
+},
+
+pt:{
+ brand:"Q - Multifuncional",
+ subtitle:"Pesquisa, mercado, canais, ferramentas e muito mais em um só espaço.",
+ search:"Pesquisar",
+ searchSub:"Conteúdo do Search.json",
+ ads:"ANÚNCIO",
+ adsSub:"Conteúdo patrocinado",
+ market:"Mercado",
+ marketSub:"Dados do market.json",
+ menu:"Menu",
+ menuSub:"Navegação principal e secundária",
+ searchBtn:"Pesquisar",
+ explore:"Explorar",
+ tip:"Interface dinâmica · Configurável por JSON",
+ copyright:"© 2026 Q Team.",
+ placeholder:"Pesquisar...",
+ enter:"Entrar",
+ loading:"Carregando...",
+ noResults:"Nenhum resultado."
+},
+
+ru:{
+ brand:"Q - Многофункциональный",
+ subtitle:"Поиск, рынок, каналы, инструменты и многое другое в одном пространстве.",
+ search:"Поиск",
+ searchSub:"Контент из Search.json",
+ ads:"РЕКЛАМА",
+ adsSub:"Спонсорский контент",
+ market:"Рынок",
+ marketSub:"Данные из market.json",
+ menu:"Меню",
+ menuSub:"Основная и дополнительная навигация",
+ searchBtn:"Поиск",
+ explore:"Меню",
+ tip:"Динамический интерфейс · Настраивается через JSON",
+ copyright:"© 2026 Q Team.",
+ placeholder:"Поиск...",
+ enter:"Войти",
+ loading:"Загрузка...",
+ noResults:"Ничего не найдено."
+},
+
+ja:{
+ brand:"Q - 多機能",
+ subtitle:"検索、市場データ、チャンネル、ツールなどを一つの空間に。",
+ search:"検索",
+ searchSub:"Search.json のコンテンツ",
+ ads:"広告",
+ adsSub:"スポンサー・おすすめ",
+ market:"市場",
+ marketSub:"market.json のデータ",
+ menu:"メニュー",
+ menuSub:"メイン・サブナビゲーション",
+ searchBtn:"検索",
+ explore:"メニュー",
+ tip:"動的インターフェース · JSONで設定可能",
+ copyright:"© 2026 Q Team.",
+ placeholder:"検索...",
+ enter:"開始",
+ loading:"読み込み中...",
+ noResults:"結果がありません。"
+},
+
+ko:{
+ brand:"Q - 다기능",
+ subtitle:"검색, 시장 데이터, 채널, 도구 등을 하나의 공간에서.",
+ search:"검색",
+ searchSub:"Search.json 콘텐츠",
+ ads:"광고",
+ adsSub:"후원 및 추천 콘텐츠",
+ market:"시장",
+ marketSub:"market.json 데이터",
+ menu:"메뉴",
+ menuSub:"메인 및 보조 탐색",
+ searchBtn:"검색",
+ explore:"메뉴 탐색",
+ tip:"동적 인터페이스 · JSON으로 구성",
+ copyright:"© 2026 Q Team.",
+ placeholder:"검색...",
+ enter:"입장",
+ loading:"로드 중...",
+ noResults:"결과가 없습니다."
+},
+
+ar:{
+ brand:"Q - متعدد الوظائف",
+ subtitle:"البحث وبيانات السوق والقنوات والأدوات والمزيد في مساحة واحدة.",
+ search:"بحث",
+ searchSub:"محتوى Search.json",
+ ads:"إعلان",
+ adsSub:"محتوى مدعوم",
+ market:"السوق",
+ marketSub:"بيانات market.json",
+ menu:"القائمة",
+ menuSub:"التنقل الرئيسي والثانوي",
+ searchBtn:"بحث",
+ explore:"استكشاف",
+ tip:"واجهة ديناميكية · قابلة للتكوين عبر JSON",
+ copyright:"© 2026 Q Team.",
+ placeholder:"بحث...",
+ enter:"دخول",
+ loading:"جار التحميل...",
+ noResults:"لا توجد نتائج."
+}
+
+};
+
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+
+function escapeHTML(value){
+
+  return String(value??"")
+    .replace(/[&<>"']/g,char=>({
+
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+
+    }[char]));
+
+}
+
+
+function escapeAttr(value){
+
+  return escapeHTML(value)
+    .replace(/`/g,"&#096;");
+
+}
+
+
+function localValue(value){
+
+  if(value && typeof value==="object"){
+
+    return (
+      value[state.lang] ??
+      value.en ??
+      Object.values(value)[0] ??
+      ""
+    );
+
+  }
+
+  return value??"";
+
+}
+
+
+function pick(obj,...keys){
+
+  for(const key of keys){
+
+    if(
+      obj &&
+      obj[key]!==undefined &&
+      obj[key]!==null
+    ){
+
+      return obj[key];
+
+    }
+
+  }
+
+  return "";
+
+}
+
+
+function safeArray(data,keys=[]){
+
+  if(Array.isArray(data)){
+    return data;
+  }
+
+  if(!data || typeof data!=="object"){
+    return [];
+  }
+
+  for(const key of keys){
+
+    if(Array.isArray(data[key])){
+      return data[key];
+    }
+
+  }
+
+  const values=Object.values(data);
+
+  if(
+    values.length &&
+    values.every(value=>typeof value==="object")
+  ){
+
+    return values;
+
+  }
+
+  return [];
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(message){
+
+  const el=$("#toast");
+
+  el.textContent=message;
+
+  el.classList.add("show");
+
+  clearTimeout(toast.timer);
+
+  toast.timer=setTimeout(()=>{
+    el.classList.remove("show");
+  },2200);
+
+}
+
+
+/* =========================================================
+   JSON LOADER
+========================================================= */
+
+async function loadJSON(file,fallback){
+
+  try{
+
+    const response=
+      await fetch(
+        file+"?v="+Date.now(),
+        {
+          cache:"no-store"
+        }
+      );
+
+    if(!response.ok){
+      throw new Error(
+        "HTTP "+response.status
+      );
+    }
+
+    return await response.json();
+
+  }catch(error){
+
+    console.warn(
+      "Q JSON fallback:",
+      file,
+      error
+    );
+
+    return fallback;
+
+  }
+
+}
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+function getLanguage(){
+
+  const fallback={
+    ...LANG.en,
+    ...(LANG[state.lang]||{})
+  };
+
+  const raw=state.data.language;
+
+  if(!raw){
+    return fallback;
+  }
+
+  if(
+    raw[state.lang] &&
+    typeof raw[state.lang]==="object"
+  ){
+
+    return {
+      ...fallback,
+      ...raw[state.lang]
+    };
+
+  }
+
+  if(
+    raw.translations &&
+    raw.translations[state.lang]
+  ){
+
+    return {
+      ...fallback,
+      ...raw.translations[state.lang]
+    };
+
+  }
+
+  return fallback;
+
+}
+
+
+function tr(key){
+
+  return getLanguage()[key] || key;
+
+}
+
+
+function renderLanguages(){
+
+  const select=$("#languageSelect");
+
+  select.innerHTML="";
+
+  CONFIG.languages.forEach(([code,name])=>{
+
+    const option=
+      document.createElement("option");
+
+    option.value=code;
+    option.textContent=name;
+    option.selected=code===state.lang;
+
+    select.appendChild(option);
+
+  });
+
+}
+
+
+function applyLanguage(){
+
+  const lang=getLanguage();
+
+  document.documentElement.lang=state.lang;
+
+  document.documentElement.dir=
+    state.lang==="ar"
+      ?"rtl"
+      :"ltr";
+
+  $("#miniBrand").textContent=
+    lang.brand;
+
+  $("#heroTitle").textContent=
+    lang.brand;
+
+  $("#heroSubtitle").textContent=
+    lang.subtitle;
+
+  $("#searchTitle").textContent=
+    lang.search;
+
+  $("#searchSub").textContent=
+    lang.searchSub;
+
+  $("#adsTitle").textContent=
+    lang.ads;
+
+  $("#adsSub").textContent=
+    lang.adsSub;
+
+  $("#marketTitle").textContent=
+    lang.market;
+
+  $("#marketSub").textContent=
+    lang.marketSub;
+
+  $("#menuTitle").textContent=
+    lang.menu;
+
+  $("#menuSub").textContent=
+    lang.menuSub;
+
+  $("#heroSearchBtn span").textContent=
+    lang.searchBtn;
+
+  $("#heroMenuBtn span").textContent=
+    lang.explore;
+
+  $("#tipText").textContent=
+    lang.tip;
+
+  $("#copyright").textContent=
+    lang.copyright;
+
+  $("#searchInput").placeholder=
+    lang.placeholder;
+
+  $("#enterBtn").textContent=
+    lang.enter;
+
+  renderLanguages();
+
+  renderSearch(
+    $("#searchInput").value
+  );
+
+  renderAds();
+
+  renderMenus();
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function searchItems(){
+
+  return safeArray(
+    state.data.search,
+    [
+      "items",
+      "results",
+      "data",
+      "search"
+    ]
+  );
+
+}
+
+
+function renderSearch(query=""){
+
+  const q=
+    query
+      .trim()
+      .toLowerCase();
+
+  const items=
+    searchItems();
+
+  let results;
+
+  if(q){
+
+    results=
+      items
+        .filter(item=>{
+
+          const text=[
+
+            item.title,
+            item.name,
+            item.description,
+            item.desc,
+            item.keywords,
+            item.tags,
+            item.category
+
+          ]
+          .map(localValue)
+          .join(" ")
+          .toLowerCase();
+
+          return text.includes(q);
+
+        })
+        .slice(0,18);
+
+  }else{
+
+    results=
+      items.slice(0,8);
+
+  }
+
+  const box=
+    $("#searchResults");
+
+  if(!results.length){
+
+    box.innerHTML=`
+
+      <div class="result-card">
+
+        <div class="result-title">
+          ${escapeHTML(tr("noResults"))}
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  box.innerHTML=
+    results
+      .map(item=>{
+
+        const title=
+          localValue(
+            pick(
+              item,
+              "title",
+              "name"
+            )
+          )
+          ||"Untitled";
+
+        const description=
+          localValue(
+            pick(
+              item,
+              "description",
+              "desc",
+              "text"
+            )
+          );
+
+        const category=
+          localValue(
+            pick(
+              item,
+              "category",
+              "tag",
+              "type"
+            )
+          );
+
+        const url=
+          pick(
+            item,
+            "url",
+            "link",
+            "href"
+          );
+
+        return `
+
+          <button
+            class="result-card"
+            data-url="${escapeAttr(url)}"
+            data-title="${escapeAttr(title)}"
+          >
+
+            <div class="result-title">
+              ${escapeHTML(title)}
+            </div>
+
+            <div class="result-desc">
+              ${escapeHTML(description)}
+            </div>
+
+            ${
+              category
+              ?
+              `<div class="result-tag">
+                ${escapeHTML(category)}
+              </div>`
+              :""
+            }
+
+          </button>
+
+        `;
+
+      })
+      .join("");
+
+  $$("#searchResults .result-card")
+    .forEach(card=>{
+
+      card.addEventListener(
+        "click",
+        ()=>{
+
+          if(card.dataset.url){
+
+            window.open(
+              card.dataset.url,
+              "_blank",
+              "noopener"
+            );
+
+          }else{
+
+            openModal(
+              card.dataset.title,
+              "No external URL is configured for this item."
+            );
+
+          }
+
+        }
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   ADS
+========================================================= */
+
+function adItems(){
+
+  return safeArray(
+    state.data.ads,
+    [
+      "ads",
+      "items",
+      "data",
+      "advertisements"
+    ]
+  );
+
+}
+
+
+function renderAds(){
+
+  let items=
+    adItems();
+
+  if(!items.length){
+
+    items=[{
+
+      title:{
+        en:"Featured",
+        zh:"推荐"
+      },
+
+      description:{
+        en:"Add advertisements in adv.json.",
+        zh:"请在 adv.json 中添加广告。"
+      },
+
+      label:"CONFIG"
+
+    }];
+
+  }
+
+  $("#adGrid").innerHTML=
+
+    items
+      .slice(0,12)
+      .map(item=>{
+
+        const title=
+          localValue(
+            pick(
+              item,
+              "title",
+              "name"
+            )
+          )
+          ||"Featured";
+
+        const description=
+          localValue(
+            pick(
+              item,
+              "description",
+              "desc",
+              "text"
+            )
+          );
+
+        const label=
+          localValue(
+            pick(
+              item,
+              "label",
+              "type"
+            )
+          )
+          ||"AD";
+
+        const url=
+          pick(
+            item,
+            "url",
+            "link",
+            "href"
+          );
+
+        return `
+
+          <button
+            class="ad-card"
+            data-url="${escapeAttr(url)}"
+            data-title="${escapeAttr(title)}"
+          >
+
+            <span class="ad-label">
+              ${escapeHTML(label)}
+            </span>
+
+            <div class="ad-title">
+              ${escapeHTML(title)}
+            </div>
+
+            <div class="ad-text">
+              ${escapeHTML(description)}
+            </div>
+
+            <span class="ad-arrow">
+              ↗
+            </span>
+
+          </button>
+
+        `;
+
+      })
+      .join("");
+
+  $$("#adGrid .ad-card")
+    .forEach(card=>{
+
+      card.addEventListener(
+        "click",
+        ()=>{
+
+          if(card.dataset.url){
+
+            window.open(
+              card.dataset.url,
+              "_blank",
+              "noopener"
+            );
+
+          }else{
+
+            toast(card.dataset.title);
+
+          }
+
+        }
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   MARKET
+========================================================= */
+
+function marketItems(){
+
+  return safeArray(
+    state.data.market,
+    [
+      "market",
+      "coins",
+      "items",
+      "data"
+    ]
+  );
+
+}
+
+
+function formatPrice(value){
+
+  const number=
+    Number(value);
+
+  if(!Number.isFinite(number)){
+    return String(value??"—");
+  }
+
+  if(Math.abs(number)>=1000){
+
+    return number.toLocaleString(
+      undefined,
+      {
+        maximumFractionDigits:2
+      }
+    );
+
+  }
+
+  if(Math.abs(number)>=1){
+
+    return number.toLocaleString(
+      undefined,
+      {
+        maximumFractionDigits:4
+      }
+    );
+
+  }
+
+  return number.toLocaleString(
+    undefined,
+    {
+      maximumSignificantDigits:5
+    }
+  );
+
+}
+
+
+function renderMarket(){
+
+  const items=
+    marketItems();
+
+  const grid=
+    $("#marketGrid");
+
+  if(!items.length){
+
+    grid.innerHTML=`
+
+      <div class="market-card">
+
+        <div class="coin-name">
+          Market
+        </div>
+
+        <div class="market-foot">
+          Add assets in market.json
+        </div>
+
+      </div>
+
+    `;
+
+    $("#marketStatus").textContent=
+      tr("loading");
+
+    return;
+
+  }
+
+  grid.innerHTML=
+
+    items
+      .slice(0,20)
+      .map(item=>{
+
+        const name=
+          localValue(
+            pick(
+              item,
+              "name",
+              "title"
+            )
+          )
+          ||
+          pick(
+            item,
+            "symbol"
+          )
+          ||
+          "Asset";
+
+        const symbol=
+          pick(
+            item,
+            "symbol",
+            "code"
+          )
+          ||
+          "—";
+
+        const price=
+          pick(
+            item,
+            "price",
+            "value",
+            "last",
+            "current"
+          );
+
+        const change=
+          pick(
+            item,
+            "change24h",
+            "change",
+            "percent",
+            "percentage"
+          );
+
+        const num=
+          Number(
+            String(change)
+              .replace("%","")
+          );
+
+        const cls=
+          Number.isFinite(num)
+            ?
+              num>0
+                ?"up"
+                :
+              num<0
+                ?"down"
+                :"neutral"
+            :
+              "neutral";
+
+        const sign=
+          Number.isFinite(num)&&num>0
+            ?"+"
+            :"";
+
+        const changeText=
+          change===undefined||
+          change===null||
+          change===""
+            ?"—"
+            :
+          String(change).includes("%")
+            ?sign+change
+            :sign+change+"%";
+
+        const source=
+          localValue(
+            pick(
+              item,
+              "source",
+              "exchange",
+              "provider"
+            )
+          )
+          ||
+          "market.json";
+
+        return `
+
+          <div class="market-card">
+
+            <div class="coin-top">
+
+              <div>
+
+                <div class="coin-name">
+                  ${escapeHTML(name)}
+                </div>
+
+                <div class="coin-symbol">
+                  ${escapeHTML(symbol)}
+                </div>
+
+              </div>
+
+              <div class="coin-icon">
+                ${escapeHTML(
+                  String(symbol)
+                    .slice(0,2)
+                    .toUpperCase()
+                )}
+              </div>
+
+            </div>
+
+            <div class="coin-price">
+              ${escapeHTML(
+                formatPrice(price)
+              )}
+            </div>
+
+            <div class="coin-change ${cls}">
+              ${escapeHTML(changeText)}
+            </div>
+
+            <div class="market-foot">
+              ${escapeHTML(source)}
+            </div>
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
+  $("#marketStatus").textContent=
+    new Date().toLocaleTimeString(
+      [],
+      {
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    );
+
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+function menuItems(){
+
+  return safeArray(
+    state.data.menu,
+    [
+      "menu",
+      "menus",
+      "items",
+      "data",
+      "index"
+    ]
+  );
+
+}
+
+
+function renderMenus(){
+
+  const items=
+    menuItems();
+
+  const grid=
+    $("#mainMenuGrid");
+
+  if(!items.length){
+
+    grid.innerHTML=`
+
+      <button
+        class="menu-btn"
+        data-index="0"
+      >
+
+        <span class="menu-icon">
+          ⚙
+        </span>
+
+        <span class="menu-name">
+          Configure
+        </span>
+
+        <span class="menu-meta">
+          Edit index.json
+        </span>
+
+      </button>
+
+    `;
+
+  }else{
+
+    grid.innerHTML=
+
+      items
+        .map((item,index)=>{
+
+          const name=
+            localValue(
+              pick(
+                item,
+                "name",
+                "title",
+                "label"
+              )
+            )
+            ||
+            "Menu";
+
+          const description=
+            localValue(
+              pick(
+                item,
+                "description",
+                "desc",
+                "subtitle"
+              )
+            );
+
+          const icon=
+            pick(
+              item,
+              "icon",
+              "emoji"
+            )
+            ||
+            "◈";
+
+          return `
+
+            <button
+              class="menu-btn ${
+                state.activeMenu===index
+                  ?"active"
+                  :""
+              }"
+              data-index="${index}"
+            >
+
+              <span class="menu-icon">
+                ${escapeHTML(icon)}
+              </span>
+
+              <span class="menu-name">
+                ${escapeHTML(name)}
+              </span>
+
+              <span class="menu-meta">
+                ${escapeHTML(description)}
+              </span>
+
+            </button>
+
+          `;
+
+        })
+        .join("");
+
+  }
+
+  $$("#mainMenuGrid .menu-btn")
+    .forEach(button=>{
+
+      button.addEventListener(
+        "click",
+        ()=>{
+
+          const index=
+            Number(
+              button.dataset.index
+            );
+
+          selectMenu(index);
+
+        }
+      );
+
+    });
+
+  if(
+    state.activeMenu!==null &&
+    items[state.activeMenu]
+  ){
+
+    renderSubmenu(
+      items[state.activeMenu]
+    );
+
+  }else{
+
+    $("#submenu")
+      .classList
+      .remove("open");
+
+  }
+
+}
+
+
+function selectMenu(index){
+
+  const items=
+    menuItems();
+
+  const item=
+    items[index];
+
+  if(!item){
+
+    openModal(
+      "Configure",
+      "Add your menu items to index.json."
+    );
+
+    return;
+
+  }
+
+  state.activeMenu=
+    state.activeMenu===index
+      ?null
+      :index;
+
+  renderMenus();
+
+  if(state.activeMenu===null){
+    return;
+  }
+
+  const children=
+    safeArray(
+      item,
+      [
+        "children",
+        "submenu",
+        "sub",
+        "items"
+      ]
+    );
+
+  const url=
+    pick(
+      item,
+      "url",
+      "link",
+      "href"
+    );
+
+  if(
+    !children.length &&
+    url
+  ){
+
+    window.open(
+      url,
+      "_blank",
+      "noopener"
+    );
+
+  }else if(!children.length){
+
+    openModal(
+      localValue(
+        pick(
+          item,
+          "name",
+          "title",
+          "label"
+        )
+      ),
+      localValue(
+        pick(
+          item,
+          "content",
+          "description",
+          "desc"
+        )
+      )
+      ||
+      "No additional content configured."
+    );
+
+  }
+
+}
+
+
+function renderSubmenu(item){
+
+  const submenu=
+    $("#submenu");
+
+  const children=
+    safeArray(
+      item,
+      [
+        "children",
+        "submenu",
+        "sub",
+        "items"
+      ]
+    );
+
+  if(!children.length){
+
+    submenu.classList.remove("open");
+
+    return;
+
+  }
+
+  submenu.innerHTML=
+
+    children
+      .map((child,index)=>{
+
+        const title=
+          localValue(
+            pick(
+              child,
+              "name",
+              "title",
+              "label"
+            )
+          )
+          ||
+          "Item "+(index+1);
+
+        const desc=
+          localValue(
+            pick(
+              child,
+              "description",
+              "desc"
+            )
+          );
+
+        const url=
+          pick(
+            child,
+            "url",
+            "link",
+            "href"
+          );
+
+        return `
+
+          <button
+            class="sub-btn"
+            data-url="${escapeAttr(url)}"
+            data-title="${escapeAttr(title)}"
+          >
+
+            <strong>
+              ${escapeHTML(title)}
+            </strong>
+
+            ${
+              desc
+              ?
+              `
+              <br>
+              <small style="color:#77748b">
+                ${escapeHTML(desc)}
+              </small>
+              `
+              :""
+            }
+
+          </button>
+
+        `;
+
+      })
+      .join("");
+
+  submenu.classList.add("open");
+
+  $$("#submenu .sub-btn")
+    .forEach(button=>{
+
+      button.addEventListener(
+        "click",
+        ()=>{
+
+          if(button.dataset.url){
+
+            window.open(
+              button.dataset.url,
+              "_blank",
+              "noopener"
+            );
+
+          }else{
+
+            openModal(
+              button.dataset.title,
+              "No URL is configured for this item."
+            );
+
+          }
+
+        }
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(title,body){
+
+  $("#modalTitle").textContent=
+    title;
+
+  $("#modalBody").innerHTML=
+    escapeHTML(body)
+      .replace(/\n/g,"<br>");
+
+  $("#modal")
+    .classList
+    .add("open");
+
+  $("#modal")
+    .setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+}
+
+
+function closeModal(){
+
+  $("#modal")
+    .classList
+    .remove("open");
+
+  $("#modal")
+    .setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(){
+
+  const light=
+    state.theme==="light";
+
+  if(light){
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--bg",
+        "#f4f4f8"
+      );
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--line",
+        "rgba(0,0,0,.1)"
+      );
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--text",
+        "#101018"
+      );
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--muted",
+        "#666578"
+      );
+
+    document.body.style.background=
+      "linear-gradient(145deg,#f5f5fa,#ecebf4)";
+
+    $("#themeBtn").textContent="☾";
+
+  }else{
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--bg",
+        "#07070d"
+      );
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--line",
+        "rgba(255,255,255,.1)"
+      );
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--text",
+        "#f6f4ff"
+      );
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--muted",
+        "#9794ad"
+      );
+
+    document.body.style.background=
+      `
+      radial-gradient(
+        circle at 15% 10%,
+        rgba(109,92,255,.18),
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at 85% 25%,
+        rgba(21,217,255,.1),
+        transparent 24%
+      ),
+      linear-gradient(
+        145deg,
+        #05050a,
+        #0b0915 48%,
+        #06070d
+      )
+      `;
+
+    $("#themeBtn").textContent="☼";
+
+  }
+
+}
+
+
+/* =========================================================
+   SCROLL LOGO
+========================================================= */
+
+function handleScroll(){
+
+  const y=
+    window.scrollY;
+
+  $("#topbar")
+    .classList
+    .toggle(
+      "scrolled",
+      y>80
+    );
+
+  const logo=
+    $("#heroLogoWrap");
+
+  const move=
+    Math.min(
+      y*.22,
+      115
+    );
+
+  const scale=
+    Math.max(
+      .68,
+      1-y/1200
+    );
+
+  logo.style.transform=
+    `
+    translate3d(
+      ${-move*.38}px,
+      ${-move*.45}px,
+      0
+    )
+    scale(${scale})
+    `;
+
+}
+
+
+/* =========================================================
+   AMBIENT PARTICLES
+========================================================= */
+
+function initAmbient(){
+
+  const canvas=
+    $("#ambientCanvas");
+
+  const ctx=
+    canvas.getContext("2d");
+
+  let width=0;
+  let height=0;
+  let dpr=1;
+  let particles=[];
+
+  const count=
+    Math.min(
+      110,
+      Math.max(
+        55,
+        Math.floor(
+          innerWidth/9
+        )
+      )
+    );
+
+  function resize(){
+
+    dpr=
+      Math.min(
+        devicePixelRatio||1,
+        2
+      );
+
+    width=
+      innerWidth;
+
+    height=
+      innerHeight;
+
+    canvas.width=
+      width*dpr;
+
+    canvas.height=
+      height*dpr;
+
+    ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+    particles=
+      Array.from(
+        {
+          length:count
+        },
+        ()=>({
+
+          x:Math.random()*width,
+          y:Math.random()*height,
+
+          vx:(Math.random()-.5)*.18,
+          vy:(Math.random()-.5)*.18,
+
+          radius:
+            Math.random()*1.5+.35,
+
+          alpha:
+            Math.random()*.5+.15,
+
+          phase:
+            Math.random()*Math.PI*2
+
+        })
+      );
+
+  }
+
+  function frame(time){
+
+    ctx.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+    particles.forEach(
+      (particle,index)=>{
+
+        particle.x+=
+          particle.vx;
+
+        particle.y+=
+          particle.vy;
+
+        particle.phase+=.006;
+
+        if(
+          particle.x< -10
+        ){
+          particle.x=
+            width+10;
+        }
+
+        if(
+          particle.x>width+10
+        ){
+          particle.x=-10;
+        }
+
+        if(
+          particle.y< -10
+        ){
+          particle.y=
+            height+10;
+        }
+
+        if(
+          particle.y>height+10
+        ){
+          particle.y=-10;
+        }
+
+        const alpha=
+          particle.alpha*
+          (
+            .65+
+            .35*
+            Math.sin(
+              particle.phase
+            )
+          );
+
+        ctx.beginPath();
+
+        ctx.arc(
+          particle.x,
+          particle.y,
+          particle.radius,
+          0,
+          Math.PI*2
+        );
+
+        ctx.fillStyle=
+          `rgba(
+            150,
+            145,
+            255,
+            ${alpha}
+          )`;
+
+        ctx.fill();
+
+        if(index%5===0){
+
+          const near=
+            particles[
+              (index+17)%
+              particles.length
+            ];
+
+          const dx=
+            particle.x-near.x;
+
+          const dy=
+            particle.y-near.y;
+
+          const distance=
+            Math.hypot(
+              dx,
+              dy
+            );
+
+          if(distance<125){
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+              particle.x,
+              particle.y
+            );
+
+            ctx.lineTo(
+              near.x,
+              near.y
+            );
+
+            ctx.strokeStyle=
+              `rgba(
+                90,
+                110,
+                220,
+                ${(1-distance/125)*.1}
+              )`;
+
+            ctx.lineWidth=.7;
+
+            ctx.stroke();
+
+          }
+
+        }
+
+      }
+    );
+
+    requestAnimationFrame(frame);
+
+  }
+
+  addEventListener(
+    "resize",
+    resize,
+    {
+      passive:true
+    }
+  );
+
+  resize();
+
+  requestAnimationFrame(frame);
+
+}
+
+
+/* =========================================================
+   SPLASH STAR FORMATION
+========================================================= */
+
+function initSplash(){
+
+  const canvas=
+    $("#splashCanvas");
+
+  const ctx=
+    canvas.getContext("2d");
+
+  let width=0;
+  let height=0;
+  let dpr=1;
+  let stars=[];
+  let targets=[];
+  let start=
+    performance.now();
+
+  let formed=false;
+
+  function resize(){
+
+    dpr=
+      Math.min(
+        devicePixelRatio||1,
+        2
+      );
+
+    width=
+      innerWidth;
+
+    height=
+      innerHeight;
+
+    canvas.width=
+      width*dpr;
+
+    canvas.height=
+      height*dpr;
+
+    ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+    createTargets();
+
+  }
+
+
+  function insideQ(x,y){
+
+    const size=
+      Math.min(
+        width,
+        height
+      )*.23;
+
+    const nx=
+      (x-width/2)/size;
+
+    const ny=
+      (y-height/2)/size;
+
+    const ring=
+      Math.abs(
+        Math.hypot(
+          nx,
+          ny
+        )-.63
+      )<.12;
+
+    const tail=
+      ny>.05 &&
+      ny<.62 &&
+      Math.abs(
+        nx-
+        (ny-.05)*.72
+      )<.12;
+
+    return ring||tail;
+
+  }
+
+
+  function createTargets(){
+
+    targets=[];
+
+    const total=520;
+
+    for(
+      let i=0;
+      i<total;
+      i++
+    ){
+
+      let x;
+      let y;
+      let attempts=0;
+
+      do{
+
+        x=
+          width/2+
+          (Math.random()-.5)*
+          Math.min(width,height)*
+          1.15;
+
+        y=
+          height/2+
+          (Math.random()-.5)*
+          Math.min(width,height)*
+          1.15;
+
+        attempts++;
+
+      }while(
+        !insideQ(x,y)&&
+        attempts<60
+      );
+
+      if(attempts<60){
+
+        targets.push({
+          x,
+          y
+        });
+
+      }
+
+    }
+
+    stars=
+      targets.map(
+        (target,index)=>({
+
+          x:Math.random()*width,
+          y:Math.random()*height,
+
+          tx:target.x,
+          ty:target.y,
+
+          radius:
+            Math.random()*1.35+.25,
+
+          delay:
+            Math.random()*.7,
+
+          alpha:
+            Math.random()*.7+.3,
+
+          hue:
+            Math.random()<.55
+              ?200
+              :255
+
+        })
+      );
+
+  }
+
+
+  function ease(value){
+
+    return 1-
+      Math.pow(
+        1-value,
+        4
+      );
+
+  }
+
+
+  function frame(now){
+
+    ctx.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+    const progress=
+      Math.min(
+        1,
+        (now-start)/3600
+      );
+
+    stars.forEach(
+      (star,index)=>{
+
+        const local=
+          Math.max(
+            0,
+            Math.min(
+              1,
+              (
+                progress-
+                star.delay*.35
+              )/.65
+            )
+          );
+
+        const e=
+          ease(local);
+
+        star.x+=
+          (star.tx-star.x)*
+          e*.045;
+
+        star.y+=
+          (star.ty-star.y)*
+          e*.045;
+
+        const tw=
+          .5+
+          .5*
+          Math.sin(
+            now*.004+
+            index
+          );
+
+        ctx.beginPath();
+
+        ctx.arc(
+          star.x,
+          star.y,
+          star.radius*
+          (.8+tw*.35),
+          0,
+          Math.PI*2
+        );
+
+        ctx.fillStyle=
+          `hsla(
+            ${star.hue},
+            100%,
+            75%,
+            ${star.alpha*(.55+tw*.45)}
+          )`;
+
+        ctx.fill();
+
+      }
+    );
+
+
+    if(
+      progress>.82 &&
+      !formed
+    ){
+
+      formed=true;
+
+      $("#splashQ")
+        .classList
+        .add("ready");
+
+      $("#splashTitle")
+        .classList
+        .add("ready");
+
+      $("#enterBtn")
+        .classList
+        .add("ready");
+
+    }
+
+    requestAnimationFrame(frame);
+
+  }
+
+  addEventListener(
+    "resize",
+    resize,
+    {
+      passive:true
+    }
+  );
+
+  resize();
+
+  requestAnimationFrame(frame);
+
+}
+
+
+/* =========================================================
+   LOAD ALL JSON
+========================================================= */
+
+async function initData(){
+
+  const [
+    language,
+    search,
+    ads,
+    menu,
+    market
+  ]=
+    await Promise.all([
+
+      loadJSON(
+        CONFIG.files.language,
+        null
+      ),
+
+      loadJSON(
+        CONFIG.files.search,
+        []
+      ),
+
+      loadJSON(
+        CONFIG.files.ads,
+        []
+      ),
+
+      loadJSON(
+        CONFIG.files.menu,
+        []
+      ),
+
+      loadJSON(
+        CONFIG.files.market,
+        []
+      )
+
+    ]);
+
+  state.data={
+    language,
+    search,
+    ads,
+    menu,
+    market
+  };
+
+  applyLanguage();
+
+  renderMarket();
+
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+$("#languageSelect")
+.addEventListener(
+  "change",
+  event=>{
+
+    state.lang=
+      event.target.value;
+
+    localStorage.setItem(
+      "q_lang",
+      state.lang
+    );
+
+    applyLanguage();
+
+  }
+);
+
+
+$("#themeBtn")
+.addEventListener(
+  "click",
+  ()=>{
+
+    state.theme=
+      state.theme==="dark"
+        ?"light"
+        :"dark";
+
+    localStorage.setItem(
+      "q_theme",
+      state.theme
+    );
+
+    applyTheme();
+
+  }
+);
+
+
+$("#searchInput")
+.addEventListener(
+  "input",
+  event=>{
+
+    renderSearch(
+      event.target.value
+    );
+
+  }
+);
+
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    if(
+      (
+        event.metaKey||
+        event.ctrlKey
+      ) &&
+      event.key.toLowerCase()==="k"
+    ){
+
+      event.preventDefault();
+
+      $("#searchInput").focus();
+
+    }
+
+    if(
+      event.key==="Escape"
+    ){
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+$("#modalClose")
+.addEventListener(
+  "click",
+  closeModal
+);
+
+
+$("#modal")
+.addEventListener(
+  "click",
+  event=>{
+
+    if(
+      event.target.id==="modal"
+    ){
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+$("#heroMenuBtn")
+.addEventListener(
+  "click",
+  ()=>{
+
+    $("#menus")
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+  }
+);
+
+
+$("#menuOpenBtn")
+.addEventListener(
+  "click",
+  ()=>{
+
+    $("#menus")
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+  }
+);
+
+
+$("#enterBtn")
+.addEventListener(
+  "click",
+  ()=>{
+
+    $("#splash")
+      .classList
+      .add("hide");
+
+    setTimeout(
+      ()=>{
+        const splash=
+          $("#splash");
+
+        if(splash){
+          splash.remove();
+        }
+      },
+      850
+    );
+
+  }
+);
+
+
+addEventListener(
+  "scroll",
+  handleScroll,
+  {
+    passive:true
+  }
+);
+
+
+/* =========================================================
+   SOCIAL LINKS
+========================================================= */
+
+$("#telegramLink").href=
+  CONFIG.social.telegram;
+
+$("#xLink").href=
+  CONFIG.social.x;
+
+
+/* =========================================================
+   START
+========================================================= */
+
+applyTheme();
+
+renderLanguages();
+
+initAmbient();
+
+initSplash();
+
+handleScroll();
+
+initData();
+
+</script>
+
+</body>
+</html>
