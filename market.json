@@ -1,1 +1,88 @@
-.
+{
+  "source": {
+    "name": "Binance",
+    "type": "ticker"
+  },
+
+  "refresh": 10000,
+
+  "currency": "USDT",
+
+  "coins": [
+    {
+      "id": "bitcoin",
+      "symbol": "BTC",
+      "binance": "BTCUSDT"
+    },
+    {
+      "id": "ethereum",
+      "symbol": "ETH",
+      "binance": "ETHUSDT"
+    },
+    {
+      "id": "solana",
+      "symbol": "SOL",
+      "binance": "SOLUSDT"
+    },
+    {
+      "id": "binancecoin",
+      "symbol": "BNB",
+      "binance": "BNBUSDT"
+    },
+    {
+      "id": "ripple",
+      "symbol": "XRP",
+      "binance": "XRPUSDT"
+    },
+    {
+      "id": "dogecoin",
+      "symbol": "DOGE",
+      "binance": "DOGEUSDT"
+    },
+    {
+      "id": "cardano",
+      "symbol": "ADA",
+      "binance": "ADAUSDT"
+    },
+    {
+      "id": "tron",
+      "symbol": "TRX",
+      "binance": "TRXUSDT"
+    },
+    {
+      "id": "toncoin",
+      "symbol": "TON",
+      "binance": "TONUSDT"
+    },
+    {
+      "id": "avalanche-2",
+      "symbol": "AVAX",
+      "binance": "AVAXUSDT"
+    },
+    {
+      "id": "polkadot",
+      "symbol": "DOT",
+      "binance": "DOTUSDT"
+    },
+    {
+      "id": "chainlink",
+      "symbol": "LINK",
+      "binance": "LINKUSDT"
+    },
+    {
+      "id": "shiba-inu",
+      "symbol": "SHIB",
+      "binance": "SHIBUSDT"
+    },
+    {
+      "id": "pepe",
+      "symbol": "PEPE",
+      "binance": "PEPEUSDT"
+    },
+    {
+      "id": "monero",
+      "symbol": "XMR",
+      "binance": "XMRUSDT"
+    }
+  ]
+}
