@@ -1,1 +1,252 @@
-.
+{
+  "menuOrder": [
+    "channel",
+    "casino",
+    "adults",
+    "ads",
+    "chat",
+    "exchange",
+    "boost",
+    "music",
+    "store"
+  ],
+
+  "catIcons": {
+    "channel": "💸",
+    "casino": "🎰",
+    "adults": "🔞",
+    "ads": "📢",
+    "chat": "💬",
+    "exchange": "💱",
+    "boost": "⚡",
+    "music": "🎵",
+    "store": "🛒"
+  },
+
+  "menu": {
+    "channel": [
+      {
+        "icon": "💸",
+        "key": "fiscal",
+        "href": "https://t.me/fiscalv"
+      },
+      {
+        "icon": "🤖",
+        "key": "list",
+        "href": "https://t.me/cozecom"
+      },
+      {
+        "icon": "📇",
+        "key": "roster",
+        "href": "https://t.me/currencyclub"
+      },
+      {
+        "icon": "🏦",
+        "key": "bank",
+        "href": "https://t.me/encryptionbank"
+      },
+      {
+        "icon": "📋",
+        "key": "userlist",
+        "href": "https://t.me/defiuser"
+      },
+      {
+        "icon": "💰",
+        "key": "service",
+        "href": "https://t.me/qpricer"
+      },
+      {
+        "icon": "💶",
+        "key": "corp",
+        "href": "https://t.me/currencycorp"
+      },
+      {
+        "icon": "❤️",
+        "key": "event",
+        "href": "https://t.me/supermoneyu"
+      },
+      {
+        "icon": "🧳",
+        "key": "club",
+        "href": "https://t.me/currencyclub"
+      }
+    ],
+
+    "casino": [
+      {
+        "icon": "🌍",
+        "key": "club",
+        "href": "https://t.me/casinocl"
+      },
+      {
+        "icon": "🤖",
+        "key": "stake",
+        "href": "https://t.me/sstake_bot"
+      },
+      {
+        "icon": "🌈",
+        "key": "rain",
+        "href": "https://t.me/rainbetlbot"
+      },
+      {
+        "icon": "7️⃣",
+        "key": "seven",
+        "href": "https://7.bet/home?uid=84005357947&ts=1785761885"
+      },
+      {
+        "icon": "❎",
+        "key": "x6",
+        "href": "https://005x6.com/?id=658131037"
+      },
+      {
+        "icon": "🎮",
+        "key": "interstellar",
+        "href": "https://wzxjxj1280.net:9900/?aff=100024796",
+        "zhOnly": true
+      },
+      {
+        "icon": "👑",
+        "key": "crown",
+        "href": "https://tg.6i.com/?id=769404398",
+        "zhOnly": true
+      },
+      {
+        "icon": "🚗",
+        "key": "bmw",
+        "href": "https://005x6.com/?id=658131037",
+        "zhOnly": true
+      }
+    ],
+
+    "adults": [
+      {
+        "icon": "🤖",
+        "key": "abot",
+        "href": "https://t.me/luciddreams?start=_tgr_4WD9kHw1MGZl"
+      },
+      {
+        "icon": "🔞",
+        "key": "paid",
+        "href": "https://t.me/txtv0"
+      }
+    ],
+
+    "ads": [
+      {
+        "icon": "📢",
+        "key": "adchannel",
+        "href": "https://t.me/qbrowse"
+      },
+      {
+        "icon": "🚀",
+        "key": "adplace",
+        "href": "https://t.me/corp_supporybot"
+      }
+    ],
+
+    "chat": [
+      {
+        "icon": "💱",
+        "key": "otc",
+        "href": "https://t.me/fiscalt"
+      },
+      {
+        "icon": "💬",
+        "key": "tipchat",
+        "href": "https://t.me/govlchat"
+      },
+      {
+        "icon": "🧧",
+        "key": "dailyRed",
+        "href": "https://t.me/qqqbot?start=srJI9JDcAWA0NGVl_i",
+        "zhOnly": true
+      },
+      {
+        "icon": "🤖",
+        "key": "chatgpt",
+        "href": "https://t.me/chatgpt?start=invite_8581174816"
+      }
+    ],
+
+    "exchange": [
+      {
+        "icon": "🟠",
+        "key": "okx",
+        "href": "https://www.topqwxrvknf.com/join/89267669"
+      },
+      {
+        "icon": "🟡",
+        "key": "binance",
+        "href": "https://www.bsmkweb.cc/referral/earn-together/refer2earn-usdc/claim?hl=zh-CN&ref=GRO_28502_4KYFD"
+      }
+    ],
+
+    "boost": [
+      {
+        "icon": "⚡",
+        "key": "boostLabel",
+        "href": "https://t.me/boost/currencycorp"
+      },
+      {
+        "icon": "🎫",
+        "key": "booststore",
+        "href": "https://t.me/betsgbot"
+      }
+    ],
+
+    "music": [
+      {
+        "icon": "🎵",
+        "key": "music",
+        "href": "https://t.me/hatsmusic"
+      }
+    ],
+
+    "store": [
+      {
+        "icon": "✈️",
+        "key": "account",
+        "href": "https://vivivi.llc3.top"
+      },
+      {
+        "icon": "🪜",
+        "key": "network",
+        "href": "https://xn--mes995ajya725k.com/#/register?code=ai87MYGQ",
+        "zhOnly": true
+      },
+      {
+        "icon": "🚩",
+        "key": "transit",
+        "href": "https://xn--4gq62f52gdss.top/#/register?code=a80ciKqs",
+        "zhOnly": true
+      },
+      {
+        "icon": "🔢",
+        "key": "usernameRent",
+        "href": "https://t.me/i888/?start=p_ImJ60Bdy",
+        "zhOnly": true
+      },
+      {
+        "icon": "✈️",
+        "key": "telegram",
+        "href": "https://t.me/feibot?start=yq_8581174816",
+        "zhOnly": true
+      },
+      {
+        "icon": "🏬",
+        "key": "AccountStore",
+        "href": "https://xbch158.com/join/240"
+      },
+      {
+        "icon": "🖥️",
+        "key": "vps",
+        "href": "https://www.9wyun.com/recommend/2lfXHitWsXOJ"
+      },
+      {
+        "icon": "🛡️",
+        "key": "nokyc",
+        "href": "https://billing.spartanhost.net/aff.php?aff=2864"
+      }
+    ]
+  }
+}
