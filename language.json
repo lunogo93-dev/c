@@ -1,1 +1,743 @@
-.
+{
+  "default": "en",
+
+  "languages": [
+    {
+      "code": "en",
+      "name": "English"
+    },
+    {
+      "code": "zh",
+      "name": "中文"
+    },
+    {
+      "code": "es",
+      "name": "Español"
+    },
+    {
+      "code": "fr",
+      "name": "Français"
+    },
+    {
+      "code": "de",
+      "name": "Deutsch"
+    },
+    {
+      "code": "ja",
+      "name": "日本語"
+    },
+    {
+      "code": "ko",
+      "name": "한국어"
+    },
+    {
+      "code": "pt",
+      "name": "Português"
+    },
+    {
+      "code": "ru",
+      "name": "Русский"
+    },
+    {
+      "code": "ar",
+      "name": "العربية"
+    }
+  ],
+
+  "tipText": {
+    "en": "Tip Address: TBs18qeGBTQPX5YtWiuhKj19EmgXSFhqr4",
+    "zh": "小费地址：TBs18qeGBTQPX5YtWiuhKj19EmgXSFhqr4"
+  },
+
+  "labels": {
+    "en": {
+      "search": "Search",
+      "searchPlaceholder": "Search...",
+      "advertisement": "Advertisement",
+      "menu": "Menu",
+      "market": "Market",
+      "about": "About",
+
+      "multifunctional": "Q Multifunctional",
+      "subtitle": "Q Team multifunctional platform",
+
+      "channel": "Channel",
+      "casino": "Casino",
+      "adults": "Adults",
+      "ads": "Ads",
+      "chat": "Chat",
+      "exchange": "Exchange",
+      "boost": "Boost",
+      "music": "Music",
+      "store": "Store",
+
+      "fiscal": "Fiscal",
+      "list": "List",
+      "roster": "Roster",
+      "bank": "Bank",
+      "userlist": "Userlist",
+      "service": "Service",
+
+      "club": "Club",
+      "stake": "Stake",
+      "rain": "Rain",
+      "seven": "7.bet",
+      "x6": "X6",
+      "interstellar": "Interstellar",
+      "crown": "Crown",
+      "bmw": "BMW",
+
+      "abot": "ABot",
+      "paid": "Paid",
+
+      "adchannel": "Ad Channel",
+      "adplace": "Ad Place",
+
+      "otc": "OTC",
+      "tipchat": "Tip Chat",
+      "dailyRed": "Daily Red",
+      "chatgpt": "Chat GPT",
+
+      "okx": "OKX",
+      "binance": "Binance",
+
+      "boostLabel": "Boost",
+      "booststore": "Boost Store",
+
+      "account": "Account",
+      "network": "Network",
+      "transit": "Transit",
+      "usernameRent": "Username",
+      "corp": "Corp",
+      "event": "Event",
+      "activity": "Activity",
+      "telegram": "Telegram",
+      "AccountStore": "Account Store",
+      "vps": "VPS",
+      "nokyc": "No KYC VPS",
+
+      "copyright": "All rights reserved."
+    },
+
+    "zh": {
+      "search": "搜索",
+      "searchPlaceholder": "搜索...",
+      "advertisement": "广告",
+      "menu": "菜单",
+      "market": "市场",
+      "about": "说明",
+
+      "multifunctional": "Q 多功能",
+      "subtitle": "Q Team 多功能平台",
+
+      "channel": "频道",
+      "casino": "赌场",
+      "adults": "成人",
+      "ads": "广告",
+      "chat": "聊天",
+      "exchange": "交易所",
+      "boost": "支持我们",
+      "music": "音乐",
+      "store": "商店",
+
+      "fiscal": "财政",
+      "list": "列表",
+      "roster": "名册",
+      "bank": "银行",
+      "userlist": "用户列表",
+      "service": "服务",
+
+      "club": "俱乐部",
+      "stake": "Stake",
+      "rain": "Rain",
+      "seven": "7.bet",
+      "x6": "X6",
+      "interstellar": "星际",
+      "crown": "皇冠",
+      "bmw": "宝马",
+
+      "abot": "机器人",
+      "paid": "观影",
+
+      "adchannel": "广告频道",
+      "adplace": "广告位",
+
+      "otc": "OTC",
+      "tipchat": "打赏聊天",
+      "dailyRed": "每日红包",
+      "chatgpt": "Chat GPT",
+
+      "okx": "OKX",
+      "binance": "币安",
+
+      "boostLabel": "加速",
+      "booststore": "流量商店",
+
+      "account": "账号",
+      "network": "一年9.9的VPN",
+      "transit": "5元2000GB",
+      "usernameRent": "用户名租用",
+      "corp": "公司",
+      "event": "活动公告",
+      "activity": "活动",
+      "telegram": "飞机内置代理",
+      "AccountStore": "海外账号商店",
+      "vps": "服务器商店",
+      "nokyc": "免实名服务器",
+
+      "copyright": "版权所有"
+    },
+
+    "es": {
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar...",
+      "advertisement": "Publicidad",
+      "menu": "Menú",
+      "market": "Mercado",
+      "about": "Acerca de",
+
+      "multifunctional": "Q Multifuncional",
+      "subtitle": "Plataforma multifuncional Q Team",
+
+      "channel": "Canales",
+      "casino": "Casino",
+      "adults": "Adultos",
+      "ads": "Anuncios",
+      "chat": "Chat",
+      "exchange": "Exchange",
+      "boost": "Boost",
+      "music": "Música",
+      "store": "Tienda",
+
+      "fiscal": "Fiscal",
+      "list": "Lista",
+      "roster": "Registro",
+      "bank": "Banco",
+      "userlist": "Usuarios",
+      "service": "Servicio",
+
+      "club": "Club",
+      "stake": "Stake",
+      "rain": "Rain",
+      "seven": "7.bet",
+      "x6": "X6",
+      "interstellar": "Interstellar",
+      "crown": "Corona",
+      "bmw": "BMW",
+
+      "abot": "ABot",
+      "paid": "Contenido",
+
+      "adchannel": "Canal publicitario",
+      "adplace": "Espacio publicitario",
+
+      "otc": "OTC",
+      "tipchat": "Chat de propinas",
+      "dailyRed": "Sobre diario",
+      "chatgpt": "Chat GPT",
+
+      "okx": "OKX",
+      "binance": "Binance",
+
+      "boostLabel": "Boost",
+      "booststore": "Tienda Boost",
+
+      "account": "Cuenta",
+      "network": "Red",
+      "transit": "Tránsito",
+      "usernameRent": "Usuario",
+      "corp": "Corp",
+      "event": "Evento",
+      "activity": "Actividad",
+      "telegram": "Telegram",
+      "AccountStore": "Tienda de cuentas",
+      "vps": "Tienda VPS",
+      "nokyc": "VPS sin KYC",
+
+      "copyright": "Todos los derechos reservados."
+    },
+
+    "fr": {
+      "search": "Recherche",
+      "searchPlaceholder": "Rechercher...",
+      "advertisement": "Publicité",
+      "menu": "Menu",
+      "market": "Marché",
+      "about": "À propos",
+
+      "multifunctional": "Q Multifonctionnel",
+      "subtitle": "Plateforme multifonctionnelle Q Team",
+
+      "channel": "Chaîne",
+      "casino": "Casino",
+      "adults": "Adultes",
+      "ads": "Publicités",
+      "chat": "Chat",
+      "exchange": "Échange",
+      "boost": "Boost",
+      "music": "Musique",
+      "store": "Boutique",
+
+      "fiscal": "Fiscal",
+      "list": "Liste",
+      "roster": "Registre",
+      "bank": "Banque",
+      "userlist": "Utilisateurs",
+      "service": "Service",
+
+      "club": "Club",
+      "stake": "Stake",
+      "rain": "Rain",
+      "seven": "7.bet",
+      "x6": "X6",
+      "interstellar": "Interstellar",
+      "crown": "Couronne",
+      "bmw": "BMW",
+
+      "abot": "ABot",
+      "paid": "Contenu",
+
+      "adchannel": "Canal publicitaire",
+      "adplace": "Espace publicitaire",
+
+      "otc": "OTC",
+      "tipchat": "Chat pour pourboires",
+      "dailyRed": "Bonus quotidien",
+      "chatgpt": "Chat GPT",
+
+      "okx": "OKX",
+      "binance": "Binance",
+
+      "boostLabel": "Boost",
+      "booststore": "Boutique Boost",
+
+      "account": "Compte",
+      "network": "Réseau",
+      "transit": "Transit",
+      "usernameRent": "Nom d'utilisateur",
+      "corp": "Corp",
+      "event": "Événement",
+      "activity": "Activité",
+      "telegram": "Telegram",
+      "AccountStore": "Boutique de comptes",
+      "vps": "Boutique VPS",
+      "nokyc": "VPS sans KYC",
+
+      "copyright": "Tous droits réservés."
+    },
+
+    "de": {
+      "search": "Suche",
+      "searchPlaceholder": "Suchen...",
+      "advertisement": "Werbung",
+      "menu": "Menü",
+      "market": "Markt",
+      "about": "Info",
+
+      "multifunctional": "Q Multifunktional",
+      "subtitle": "Q Team Multifunktionsplattform",
+
+      "channel": "Kanal",
+      "casino": "Casino",
+      "adults": "Erwachsene",
+      "ads": "Werbung",
+      "chat": "Chat",
+      "exchange": "Börse",
+      "boost": "Boost",
+      "music": "Musik",
+      "store": "Shop",
+
+      "fiscal": "Finanzen",
+      "list": "Liste",
+      "roster": "Verzeichnis",
+      "bank": "Bank",
+      "userlist": "Benutzer",
+      "service": "Service",
+
+      "club": "Club",
+      "stake": "Stake",
+      "rain": "Rain",
+      "seven": "7.bet",
+      "x6": "X6",
+      "interstellar": "Interstellar",
+      "crown": "Krone",
+      "bmw": "BMW",
+
+      "abot": "ABot",
+      "paid": "Inhalte",
+
+      "adchannel": "Werbekanal",
+      "adplace": "Werbeplatz",
+
+      "otc": "OTC",
+      "tipchat": "Trinkgeld-Chat",
+      "dailyRed": "Täglicher Bonus",
+      "chatgpt": "Chat GPT",
+
+      "okx": "OKX",
+      "binance": "Binance",
+
+      "boostLabel": "Boost",
+      "booststore": "Boost-Shop",
+
+      "account": "Konto",
+      "network": "Netzwerk",
+      "transit": "Transit",
+      "usernameRent": "Benutzername",
+      "corp": "Corp",
+      "event": "Event",
+      "activity": "Aktivität",
+      "telegram": "Telegram",
+      "AccountStore": "Account-Shop",
+      "vps": "VPS-Shop",
+      "nokyc": "VPS ohne KYC",
+
+      "copyright": "Alle Rechte vorbehalten."
+    },
+
+    "ja": {
+      "search": "検索",
+      "searchPlaceholder": "検索...",
+      "advertisement": "広告",
+      "menu": "メニュー",
+      "market": "市場",
+      "about": "説明",
+
+      "multifunctional": "Q 多機能",
+      "subtitle": "Q Team 多機能プラットフォーム",
+
+      "channel": "チャンネル",
+      "casino": "カジノ",
+      "adults": "成人",
+      "ads": "広告",
+      "chat": "チャット",
+      "exchange": "取引所",
+      "boost": "ブースト",
+      "music": "音楽",
+      "store": "ショップ",
+
+      "fiscal": "財務",
+      "list": "リスト",
+      "roster": "名簿",
+      "bank": "銀行",
+      "userlist": "ユーザー",
+      "service": "サービス",
+
+      "club": "クラブ",
+      "stake": "Stake",
+      "rain": "Rain",
+      "seven": "7.bet",
+      "x6": "X6",
+      "interstellar": "Interstellar",
+      "crown": "クラウン",
+      "bmw": "BMW",
+
+      "abot": "ABot",
+      "paid": "有料",
+
+      "adchannel": "広告チャンネル",
+      "adplace": "広告枠",
+
+      "otc": "OTC",
+      "tipchat": "チップチャット",
+      "dailyRed": "デイリーレッド",
+      "chatgpt": "Chat GPT",
+
+      "okx": "OKX",
+      "binance": "Binance",
+
+      "boostLabel": "ブースト",
+      "booststore": "ブーストストア",
+
+      "account": "アカウント",
+      "network": "ネットワーク",
+      "transit": "トランジット",
+      "usernameRent": "ユーザー名",
+      "corp": "Corp",
+      "event": "イベント",
+      "activity": "アクティビティ",
+      "telegram": "Telegram",
+      "AccountStore": "アカウントショップ",
+      "vps": "VPSショップ",
+      "nokyc": "KYC不要VPS",
+
+      "copyright": "All rights reserved."
+    },
+
+    "ko": {
+      "search": "검색",
+      "searchPlaceholder": "검색...",
+      "advertisement": "광고",
+      "menu": "메뉴",
+      "market": "시장",
+      "about": "정보",
+
+      "multifunctional": "Q 다기능",
+      "subtitle": "Q Team 다기능 플랫폼",
+
+      "channel": "채널",
+      "casino": "카지노",
+      "adults": "성인",
+      "ads": "광고",
+      "chat": "채팅",
+      "exchange": "거래소",
+      "boost": "부스트",
+      "music": "음악",
+      "store": "스토어",
+
+      "fiscal": "재정",
+      "list": "목록",
+      "roster": "명단",
+      "bank": "은행",
+      "userlist": "사용자",
+      "service": "서비스",
+
+      "club": "클럽",
+      "stake": "Stake",
+      "rain": "Rain",
+      "seven": "7.bet",
+      "x6": "X6",
+      "interstellar": "Interstellar",
+      "crown": "크라운",
+      "bmw": "BMW",
+
+      "abot": "ABot",
+      "paid": "유료",
+
+      "adchannel": "광고 채널",
+      "adplace": "광고 위치",
+
+      "otc": "OTC",
+      "tipchat": "팁 채팅",
+      "dailyRed": "일일 보너스",
+      "chatgpt": "Chat GPT",
+
+      "okx": "OKX",
+      "binance": "Binance",
+
+      "boostLabel": "부스트",
+      "booststore": "부스트 스토어",
+
+      "account": "계정",
+      "network": "네트워크",
+      "transit": "트랜짓",
+      "usernameRent": "사용자 이름",
+      "corp": "Corp",
+      "event": "이벤트",
+      "activity": "활동",
+      "telegram": "Telegram",
+      "AccountStore": "계정 스토어",
+      "vps": "VPS 스토어",
+      "nokyc": "KYC 없는 VPS",
+
+      "copyright": "모든 권리 보유."
+    },
+
+    "pt": {
+      "search": "Pesquisar",
+      "searchPlaceholder": "Pesquisar...",
+      "advertisement": "Publicidade",
+      "menu": "Menu",
+      "market": "Mercado",
+      "about": "Sobre",
+
+      "multifunctional": "Q Multifuncional",
+      "subtitle": "Plataforma multifuncional Q Team",
+
+      "channel": "Canal",
+      "casino": "Casino",
+      "adults": "Adultos",
+      "ads": "Anúncios",
+      "chat": "Chat",
+      "exchange": "Exchange",
+      "boost": "Boost",
+      "music": "Música",
+      "store": "Loja",
+
+      "fiscal": "Fiscal",
+      "list": "Lista",
+      "roster": "Registro",
+      "bank": "Banco",
+      "userlist": "Usuários",
+      "service": "Serviço",
+
+      "club": "Clube",
+      "stake": "Stake",
+      "rain": "Rain",
+      "seven": "7.bet",
+      "x6": "X6",
+      "interstellar": "Interstellar",
+      "crown": "Coroa",
+      "bmw": "BMW",
+
+      "abot": "ABot",
+      "paid": "Pago",
+
+      "adchannel": "Canal de anúncios",
+      "adplace": "Espaço publicitário",
+
+      "otc": "OTC",
+      "tipchat": "Chat de gorjetas",
+      "dailyRed": "Bônus diário",
+      "chatgpt": "Chat GPT",
+
+      "okx": "OKX",
+      "binance": "Binance",
+
+      "boostLabel": "Boost",
+      "booststore": "Loja Boost",
+
+      "account": "Conta",
+      "network": "Rede",
+      "transit": "Trânsito",
+      "usernameRent": "Nome de usuário",
+      "corp": "Corp",
+      "event": "Evento",
+      "activity": "Atividade",
+      "telegram": "Telegram",
+      "AccountStore": "Loja de contas",
+      "vps": "Loja VPS",
+      "nokyc": "VPS sem KYC",
+
+      "copyright": "Todos os direitos reservados."
+    },
+
+    "ru": {
+      "search": "Поиск",
+      "searchPlaceholder": "Поиск...",
+      "advertisement": "Реклама",
+      "menu": "Меню",
+      "market": "Рынок",
+      "about": "Описание",
+
+      "multifunctional": "Q Многофункциональный",
+      "subtitle": "Многофункциональная платформа Q Team",
+
+      "channel": "Канал",
+      "casino": "Казино",
+      "adults": "18+",
+      "ads": "Реклама",
+      "chat": "Чат",
+      "exchange": "Биржа",
+      "boost": "Буст",
+      "music": "Музыка",
+      "store": "Магазин",
+
+      "fiscal": "Финансы",
+      "list": "Список",
+      "roster": "Реестр",
+      "bank": "Банк",
+      "userlist": "Пользователи",
+      "service": "Сервис",
+
+      "club": "Клуб",
+      "stake": "Stake",
+      "rain": "Rain",
+      "seven": "7.bet",
+      "x6": "X6",
+      "interstellar": "Interstellar",
+      "crown": "Корона",
+      "bmw": "BMW",
+
+      "abot": "ABot",
+      "paid": "Платный",
+
+      "adchannel": "Рекламный канал",
+      "adplace": "Рекламное место",
+
+      "otc": "OTC",
+      "tipchat": "Чат чаевых",
+      "dailyRed": "Ежедневный бонус",
+      "chatgpt": "Chat GPT",
+
+      "okx": "OKX",
+      "binance": "Binance",
+
+      "boostLabel": "Буст",
+      "booststore": "Магазин буста",
+
+      "account": "Аккаунт",
+      "network": "Сеть",
+      "transit": "Транзит",
+      "usernameRent": "Имя пользователя",
+      "corp": "Corp",
+      "event": "Событие",
+      "activity": "Активность",
+      "telegram": "Telegram",
+      "AccountStore": "Магазин аккаунтов",
+      "vps": "Магазин VPS",
+      "nokyc": "VPS без KYC",
+
+      "copyright": "Все права защищены."
+    },
+
+    "ar": {
+      "search": "بحث",
+      "searchPlaceholder": "بحث...",
+      "advertisement": "إعلان",
+      "menu": "القائمة",
+      "market": "السوق",
+      "about": "حول",
+
+      "multifunctional": "Q متعدد الوظائف",
+      "subtitle": "منصة Q Team متعددة الوظائف",
+
+      "channel": "القناة",
+      "casino": "كازينو",
+      "adults": "للبالغين",
+      "ads": "إعلانات",
+      "chat": "دردشة",
+      "exchange": "منصة تداول",
+      "boost": "تعزيز",
+      "music": "موسيقى",
+      "store": "المتجر",
+
+      "fiscal": "مالي",
+      "list": "القائمة",
+      "roster": "السجل",
+      "bank": "البنك",
+      "userlist": "المستخدمون",
+      "service": "الخدمة",
+
+      "club": "النادي",
+      "stake": "Stake",
+      "rain": "Rain",
+      "seven": "7.bet",
+      "x6": "X6",
+      "interstellar": "Interstellar",
+      "crown": "Crown",
+      "bmw": "BMW",
+
+      "abot": "ABot",
+      "paid": "مدفوع",
+
+      "adchannel": "قناة إعلانية",
+      "adplace": "مساحة إعلانية",
+
+      "otc": "OTC",
+      "tipchat": "دردشة التبرعات",
+      "dailyRed": "المكافأة اليومية",
+      "chatgpt": "Chat GPT",
+
+      "okx": "OKX",
+      "binance": "Binance",
+
+      "boostLabel": "تعزيز",
+      "booststore": "متجر التعزيز",
+
+      "account": "الحساب",
+      "network": "الشبكة",
+      "transit": "العبور",
+      "usernameRent": "اسم المستخدم",
+      "corp": "Corp",
+      "event": "الحدث",
+      "activity": "النشاط",
+      "telegram": "Telegram",
+      "AccountStore": "متجر الحسابات",
+      "vps": "متجر VPS",
+      "nokyc": "VPS بدون KYC",
+
+      "copyright": "جميع الحقوق محفوظة."
+    }
+  }
+}
